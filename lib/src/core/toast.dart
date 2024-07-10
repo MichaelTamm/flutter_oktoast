@@ -46,7 +46,7 @@ ToastFuture showToast(
   bool? dismissOtherToast,
   OKToastAnimationBuilder? animationBuilder,
   Duration? animationDuration,
-  Curve? animationCurve,
+  (Curve, Curve)? animationCurves,
   BoxConstraints? constraints,
   EdgeInsetsGeometry? margin = const EdgeInsets.all(50),
   TextDirection? textDirection,
@@ -102,7 +102,7 @@ ToastFuture showToast(
     textDirection: textDirection,
     animationBuilder: animationBuilder,
     animationDuration: animationDuration,
-    animationCurve: animationCurve,
+    animationCurves: animationCurves,
   );
 }
 
@@ -119,7 +119,7 @@ ToastFuture showToastWidget(
   bool? handleTouch,
   OKToastAnimationBuilder? animationBuilder,
   Duration? animationDuration,
-  Curve? animationCurve,
+  (Curve, Curve)? animationCurves,
 }) {
   if (context == null) {
     _throwIfNoContext(_contextMap.values, 'showToastWidget');
@@ -131,7 +131,7 @@ ToastFuture showToastWidget(
   handleTouch ??= theme.handleTouch;
   animationBuilder ??= theme.animationBuilder;
   animationDuration ??= theme.animationDuration;
-  animationCurve ??= theme.animationCurve;
+  animationCurves ??= theme.animationCurves;
   duration ??= theme.duration;
 
   final bool movingOnWindowChange = theme.movingOnWindowChange;
@@ -155,7 +155,7 @@ ToastFuture showToastWidget(
             movingOnWindowChange: movingOnWindowChange,
             animationBuilder: animationBuilder!,
             animationDuration: animationDuration!,
-            animationCurve: animationCurve!,
+            animationCurves: animationCurves!,
             child: widget,
           ),
         ),
@@ -177,7 +177,7 @@ ToastFuture showToastWidget(
   );
 
   if (duration != Duration.zero) {
-    future.timer = Timer(duration, () {
+    future.timer = Timer(animationDuration + duration + animationDuration, () {
       future.dismiss();
     });
   }

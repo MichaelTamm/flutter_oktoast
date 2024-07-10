@@ -8,7 +8,7 @@ class ToastContainer extends StatefulWidget {
     required this.position,
     required this.animationBuilder,
     required this.animationDuration,
-    required this.animationCurve,
+    required this.animationCurves,
     this.movingOnWindowChange = false,
   });
 
@@ -18,8 +18,7 @@ class ToastContainer extends StatefulWidget {
   final ToastPosition position;
   final OKToastAnimationBuilder animationBuilder;
   final Duration animationDuration;
-
-  final Curve animationCurve;
+  final (Curve, Curve) animationCurves;
 
   @override
   State<ToastContainer> createState() => _ToastContainerState();
@@ -42,15 +41,14 @@ class _ToastContainerState extends State<ToastContainer>
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
-
-    Future<void>.delayed(const Duration(milliseconds: 30), () {
-      _animateTo(1.0);
-    });
+    WidgetsBinding.instance
+      ..addObserver(this)
+      ..scheduleFrameCallback((_) => _animateTo(1));
     if (widget.duration != Duration.zero) {
-      Future<void>.delayed(widget.duration - animationDuration, () {
-        _animateTo(0.0);
-      });
+      Future<void>.delayed(
+        animationDuration + widget.duration,
+        () => _animateTo(0),
+      );
     }
   }
 
@@ -115,16 +113,18 @@ class _ToastContainerState extends State<ToastContainer>
       return;
     }
     if (value == 0) {
-      _animationController.animateTo(
-        value,
-        duration: animationDuration,
-        curve: widget.animationCurve,
-      );
-    } else {
+      // Disappear animation ...
       _animationController.animateBack(
         value,
         duration: animationDuration,
-        curve: widget.animationCurve,
+        curve: widget.animationCurves.$2,
+      );
+    } else {
+      // Appear animation ...
+      _animationController.animateTo(
+        value,
+        duration: animationDuration,
+        curve: widget.animationCurves.$1,
       );
     }
   }

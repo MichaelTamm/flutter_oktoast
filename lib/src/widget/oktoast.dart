@@ -16,7 +16,7 @@ class OKToast extends StatefulWidget {
     this.handleTouch = false,
     this.animationBuilder,
     this.animationDuration = _defaultAnimDuration,
-    this.animationCurve,
+    this.animationCurves,
     this.duration,
   }) : backgroundColor = backgroundColor ?? _defaultBackgroundColor;
 
@@ -60,10 +60,10 @@ class OKToast extends StatefulWidget {
   final OKToastAnimationBuilder? animationBuilder;
 
   /// The animation duration of show/hide toast.
-  final Duration animationDuration;
+  final Duration? animationDuration;
 
-  /// The animation curve of show/hide toast.
-  final Curve? animationCurve;
+  /// The animation curves of show/hide toast.
+  final (Curve, Curve)? animationCurves;
 
   @override
   State<OKToast> createState() => _OKToastState();
@@ -99,9 +99,6 @@ class _OKToastState extends State<OKToast> {
     final EdgeInsets textPadding = widget.textPadding ??
         const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0);
 
-    final OKToastAnimationBuilder animationBuilder =
-        widget.animationBuilder ?? _defaultBuildAnimation;
-
     final haveMaterialParent = Material.maybeOf(context) != null;
 
     if (!haveMaterialParent) {
@@ -122,9 +119,9 @@ class _OKToastState extends State<OKToast> {
       textAlign: textAlign,
       textPadding: textPadding,
       handleTouch: widget.handleTouch,
-      animationBuilder: animationBuilder,
-      animationDuration: widget.animationDuration,
-      animationCurve: widget.animationCurve ?? Curves.easeIn,
+      animationBuilder: widget.animationBuilder ?? _defaultBuildAnimation,
+      animationDuration: widget.animationDuration ?? _defaultAnimDuration,
+      animationCurves: widget.animationCurves ?? _defaultAnimCurves,
       duration: widget.duration ?? _defaultDuration,
       child: w,
     );

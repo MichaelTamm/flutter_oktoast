@@ -14,7 +14,7 @@ class ToastTheme extends InheritedWidget {
     this.movingOnWindowChange = true,
     this.animationBuilder = _defaultBuildAnimation,
     this.animationDuration = _defaultAnimDuration,
-    this.animationCurve = Curves.easeIn,
+    this.animationCurves = _defaultAnimCurves,
     this.duration = _defaultDuration,
     this.textPadding,
     this.textAlign,
@@ -35,7 +35,7 @@ class ToastTheme extends InheritedWidget {
   final bool movingOnWindowChange;
   final OKToastAnimationBuilder animationBuilder;
   final Duration animationDuration;
-  final Curve animationCurve;
+  final (Curve, Curve) animationCurves;
   final Duration duration;
   final TextAlign? textAlign;
   final EdgeInsets? textPadding;

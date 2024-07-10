@@ -10,7 +10,11 @@ Widget _defaultBuildAnimation(
 }
 
 const Duration _defaultDuration = Duration(milliseconds: 2300);
+
 const Duration _defaultAnimDuration = Duration(milliseconds: 250);
+
+const (Curve, Curve) _defaultAnimCurves = (decelerateEasing, accelerateEasing);
+
 const Color _defaultBackgroundColor = Color(0xDD000000);
 
 const TextStyle _defaultTextStyle = TextStyle(
@@ -18,6 +22,7 @@ const TextStyle _defaultTextStyle = TextStyle(
   fontWeight: FontWeight.normal,
   color: Colors.white,
 );
+
 const ToastTheme defaultTheme = ToastTheme(
   radius: 10,
   textStyle: _defaultTextStyle,

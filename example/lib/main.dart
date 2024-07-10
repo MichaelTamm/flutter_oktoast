@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
       builder: (_, Widget? child) => OKToast(
         textStyle: const TextStyle(fontSize: 19.0, color: Colors.white),
         backgroundColor: Colors.grey,
-        animationCurve: Curves.easeIn,
+        animationCurves: (decelerateEasing, accelerateEasing),
         animationBuilder: const Miui10AnimBuilder().call,
         animationDuration: const Duration(milliseconds: 200),
         duration: const Duration(seconds: 3),
